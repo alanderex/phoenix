@@ -1,7 +1,8 @@
 # Create Azure Container Registry secret in Kubernetes
 
 !!! This is only required if you are not using an azure container registry that is part of the same subscription
-!!! Prefered approach is to grant the Kubernetes service principal Reader role permissions in your azure container registry via Access Control (IAM
+!!! Prefered approach is to grant the Kubernetes service principal Reader role permissions in your azure container registry via Access Control (IAM)
+See [learning yaml](learn_yaml_files.md).
 
 ```
 kubectl create secret docker-registry kuberegistry --docker-server 'myveryownregistry-on.azurecr.io' --docker-username 'username' --docker-password 'password' --docker-email 'example@example.com'
@@ -21,7 +22,7 @@ https://kubernetes.io/docs/concepts/configuration/secret/
 
 Simple way to deploy secrets via command line
 ```
-kubectl create secret generic mySecretName --from-literal=username=someRandomSecretValue
+kubectl create secret generic mysecretvalue --from-literal=username=someRandomSecretValue --from-literal=password=someRandomSecretPassword
 ```
 OR do it via yaml files  - here secrets must be base64 encoded.
 ~~~
@@ -30,7 +31,7 @@ echo -n "someRandomSecretValue" | base64
 
 To create an application insights secret required for the calculator enter the following with the correct key
 ~~~
-kubectl create secret generic appinsightsecret --from-literal=appinsightskey=ab0bebe0-7e34-4ed3-b943-6fa683730a55
+kubectl create secret generic appinsightsecret --from-literal=appinsightskey=8e9a2af3-8a55-44e0-99bc-4ecd1f3ae59f
 ~~~
 
 Define secret in yaml file

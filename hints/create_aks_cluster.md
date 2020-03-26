@@ -3,17 +3,19 @@ https://docs.microsoft.com/en-us/azure/aks/kubernetes-walkthrough#create-aks-clu
 
 **Hint:** The "set KEY value" values commands work in Powershell. In Bash use KEY=value.
 
+
 1. Use bash to create the resource group by using azure cloud shell (https://shell.azure.com/ )
 ```
-LOCATION=westeurope
+LOCATION=northeurope
 KUBE_GROUP=myKubeRG
 KUBE_NAME=myFirstKube
 az group create -n $KUBE_GROUP -l $LOCATION
 ```
 
 2. Create the aks cluster using azure shell
+
 ```
-az aks create --name $KUBE_NAME --resource-group $KUBE_GROUP --node-count 3 --generate-ssh-keys --enable-addons monitoring --kubernetes-version 1.12.6
+az aks create --name $KUBE_NAME --resource-group $KUBE_GROUP --node-count 3 --generate-ssh-keys --enable-addons monitoring --kubernetes-version 1.15.7 --enable-rbac
 ```
 Additional parameters can be found here https://docs.microsoft.com/en-us/cli/azure/aks?view=azure-cli-latest#az_aks_create
 if you have to use the given service principal (because you are not allowed to create services principals in azure ad) add the following parameters
@@ -29,6 +31,8 @@ and set as parameter
 ```
 --node-vm-size Standard_B2s
 ```
+
+# Get access to cluster
 
 3. Export the kubectrl credentials files. 
 ```

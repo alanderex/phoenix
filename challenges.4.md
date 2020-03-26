@@ -1,7 +1,8 @@
 # Kubernetes Operational InsightsChallenge
 > Need help? Check hints [here :blue_book:](hints/k8sMulti.md)!
 
-> In this chapter you will upgrade your application to use another implementation of the calculator backend written in Go. You have heard that Go is so much faster and better and want to try this out without interrupting your users. Therefore you have to do a blue green deployment with your old frontend and backend along with your new go-calc-backend. All containers are sending telemetry to Application Insights (assuming you have configured the configuration of the insights key correctly) - so you should be able to evaluate the performance of your new container relative to the old one. If it does not improve your service you should perform a rollback - all without impacting your users.
+## Why 
+In this chapter you will upgrade your application to use another implementation of the calculator backend written in Go. You have heard that Go is so much faster and better and want to try this out without interrupting your users. Therefore you have to do a blue green deployment with your old frontend and backend along with your new go-calc-backend. All containers are sending telemetry to Application Insights (assuming you have configured the configuration of the insights key correctly) - so you should be able to evaluate the performance of your new container relative to the old one. If it does not improve your service you should perform a rollback - all without impacting your users.
 
 ![](/img/challenge4.png)
 
@@ -49,7 +50,19 @@ You will need to create:
 - Use AKS health to check for performance and health of the containers and your cluster
 - If the performance is not good enough perform a rollback
 
-## BONUS Challenge - Put your helm chart into an helm chart repository
+## BONUS Challenge 1 - Put your helm chart into an helm chart repository
 https://docs.microsoft.com/en-gb/azure/container-registry/container-registry-helm-repos
 - Automatically publish your helm chart in your container registry
 - Share the helm chart repo with your co-worker and see that the installation works from remote
+
+## BONUS Challenge 2 - Use an azure redis cache to optimize performance
+- Create an azure redis cache and set environment variables
+```
+REDIS_HOST=XXXXX.redis.cache.windows.net
+REDIS_AUTH=ASDFASDFASDFASDF=
+```
+- Create a redis secret in the app namespaces
+```
+kubectl create secret generic rediscachesecret --from-literal=redishostkey=$REDIS_HOST --from-literal=redisauthkey=$REDIS_AUTH --namespace $APP_NS
+```
+- Configure the deploymet to use '--set dependencies.useRedis=true'
